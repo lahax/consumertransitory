@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+
+  zoo:
+    image: wurstmeister/zookeeper
+    hostname: zoo
+    ports:
+      - "2181:2181"
+    container_name: zoo
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zoo:2888:3888
+
+  kafkapermanent:
+    image: wurstmeister/kafka
+    hostname: kafkapermanent
+    container_name: kafkapermanent
+    ports:
+      - "19094:19094"
+      - "9094:9094"
+      - "29094:29094"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zoo:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_LISTENERS: INTERNAL://:19094,EXTERNAL://:9094,DOCKER://:29094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafkapermanent:19094,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9094,DOCKER://localhost:29094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    depends_on:
+      - zoo
+
+  kafkatransitory:
+    image: wurstmeister/kafka
+    hostname: kafkatransitory
+    container_name: kafkatransitory
+    ports:
+      - "19095:19095"
+      - "9095:9095"
+      - "29095:29095"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zoo:2181
+      KAFKA_BROKER_ID: 2
+      KAFKA_LISTENERS: INTERNAL://:19095,EXTERNAL://:9095,DOCKER://:29095
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafkatransitory:19095,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9095,DOCKER://localhost:29095
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    depends_on:
+      - zoo
