@@ -13,6 +13,20 @@ services:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_SERVERS: zoo:2888:3888
 
+  zoo2:
+    image: wurstmeister/zookeeper
+    hostname: zoo2
+    ports:
+      - "2182:2182"
+    container_name: zoo2
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2182
+      ZOOKEEPER_SERVER_ID: 2
+      ZOOKEEPER_SERVERS: zoo2:2888:3888
+    volumes:
+      - /c/Users/haxla/Desktop/concept/terna/configternazoo:/conf
+    command: sh -c "/opt/zookeeper-3.4.13/bin/zkServer.sh start-foreground /conf/zoo.cfg"
+
   kafkapermanent:
     image: wurstmeister/kafka
     hostname: kafkapermanent
@@ -43,7 +57,7 @@ services:
       - "9095:9095"
       - "29095:29095"
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: zoo:2181
+      KAFKA_ZOOKEEPER_CONNECT: zoo2:2182
       KAFKA_BROKER_ID: 2
       KAFKA_LISTENERS: INTERNAL://:19095,EXTERNAL://:9095,DOCKER://:29095
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafkatransitory:19095,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9095,DOCKER://localhost:29095
@@ -53,4 +67,6 @@ services:
       KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
-      - zoo
+      - zoo2
+volumes:
+  zookeeper-config:

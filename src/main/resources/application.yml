@@ -3,7 +3,7 @@ server:
 spring:
   kafka:
     consumer:
-      bootstrap-servers: localhost:9093,127.0.0.1:9093
+      bootstrap-servers: localhost:9095,127.0.0.1:9095
       group-id: "json-consumer-transitory"
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
