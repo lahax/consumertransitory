@@ -3,6 +3,7 @@ package org.reply.consumertransitory.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reply.consumertransitory.KafkaConsumerService;
+import org.reply.consumertransitory.KafkaProducerService;
 import org.reply.consumertransitory.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,9 @@ public class MessageController {
     @Autowired
     private KafkaConsumerService kafkaConsumerService;
 
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
 
     @GetMapping("/getMessage")
     public ResponseEntity<List<Message>> getMessage() throws InterruptedException {
@@ -31,6 +35,12 @@ public class MessageController {
             log.error(e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @PostMapping("/produceMessage")
+    public ResponseEntity<String> send(@RequestBody String message) {
+        kafkaProducerService.send(message);
+        return ResponseEntity.ok("Message sent successfully");
     }
 
     @DeleteMapping("/deleteMessageList")
