@@ -1,4 +1,4 @@
-package org.reply.consumertransitory.controller;
+package org.reply.consumertransitory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

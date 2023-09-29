@@ -1,4 +1,4 @@
-package org.reply.consumertransitory.controller;
+package org.reply.consumertransitory;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.beans.factory.annotation.Value;
