@@ -22,7 +22,6 @@ public class MessageController {
     private static final Logger log = LogManager.getLogger();
     @Autowired
     private KafkaConsumerService kafkaConsumerService;
-
     @Autowired
     private KafkaProducerService kafkaProducerService;
 
@@ -38,15 +37,25 @@ public class MessageController {
         }
     }
 
-    @PostMapping("/produceMessages")
-    public ResponseEntity<String> sendList(@RequestBody List<ProducerMessage> messageList) {
-        kafkaProducerService.sendList(messageList);
-        return ResponseEntity.ok("Messages sent successfully...");
+    @PostMapping("/postOnEvent")
+    public ResponseEntity<String> sendEvent(@RequestBody String message) {
+        kafkaProducerService.sendEvent(message);
+        return ResponseEntity.ok("Message sent successfully on Event topic");
     }
-    @PostMapping("/produceMessage")
-    public ResponseEntity<String> send(@RequestBody ProducerMessage message) {
-        kafkaProducerService.send(message);
-        return ResponseEntity.ok("Message sent successfully...");
+    @PostMapping("/postOnDiagnostics")
+    public ResponseEntity<String> sendDiagnostics(@RequestBody String message) {
+        kafkaProducerService.sendDiagnostics(message);
+        return ResponseEntity.ok("Message sent successfully on Diagnostics topic");
+    }
+    @PostMapping("/postOnDigicEvent")
+    public ResponseEntity<String> sendDigicEvent(@RequestBody String message) {
+        kafkaProducerService.sendDigicEvent(message);
+        return ResponseEntity.ok("Message sent successfully on Digic Event topic");
+    }
+    @PostMapping("/postOnDigicDiagnostics")
+    public ResponseEntity<String> sendDigicDiagnostics(@RequestBody String message) {
+        kafkaProducerService.sendDigicDiagnostics(message);
+        return ResponseEntity.ok("Message sent successfully on Digic Diagnostics topic");
     }
 
     @DeleteMapping("/deleteMessageList")

@@ -14,7 +14,6 @@ import java.util.List;
 @EnableConfigurationProperties
 public class KafkaConsumerService {
 
-
     public static List<Message> messageList = new ArrayList<>();
 
     @KafkaListener(topics = {"Event", "Diagnostics", "digic_event", "digic_diagnostics"}, groupId="consumer-transitory")
@@ -31,7 +30,6 @@ public class KafkaConsumerService {
             e.printStackTrace();
         }
     }
-
     public List<Message> getMessageList() {
         return messageList;
     }

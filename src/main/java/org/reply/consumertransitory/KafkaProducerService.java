@@ -11,15 +11,17 @@ public class KafkaProducerService {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
-
-    public void sendList(List<ProducerMessage> messageList) {
-        for(ProducerMessage message : messageList) {
-        kafkaTemplate.send(message.getTopic(), message.getValue());
-        }
+    public void sendEvent(String message) {
+        kafkaTemplate.send("Event", message);
     }
-
-    public void send(ProducerMessage message) {
-            kafkaTemplate.send(message.getTopic(), message.getValue());
-        }
+    public void sendDiagnostics(String message) {
+        kafkaTemplate.send("Diagnostics", message);
     }
+    public void sendDigicEvent(String message) {
+        kafkaTemplate.send("digic_event", message);
+    }
+    public void sendDigicDiagnostics(String message) {
+        kafkaTemplate.send("digic_diagnostics", message);
+    }
+}
 
