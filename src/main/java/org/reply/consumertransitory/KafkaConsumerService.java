@@ -17,7 +17,7 @@ public class KafkaConsumerService {
 
     public static List<Message> messageList = new ArrayList<>();
 
-    @KafkaListener(topics = {"Event", "Diagnostics", "digic_event", "digic_diagnostics"}, groupId="json-consumer-transitory")
+    @KafkaListener(topics = {"Event", "Diagnostics", "digic_event", "digic_diagnostics"}, groupId="consumer-transitory")
     public void listen(ConsumerRecord<String, String> record){
         String topic = record.topic();
         String payload = record.value();

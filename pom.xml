@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.reply</groupId>
-	<artifactId>consumertransitory</artifactId>
+	<artifactId>message-comparison-consumer-transitory</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>consumertransitory</name>
-	<description>Demo project Kafka Consumer Piattaforma Transitoria</description>
+	<name>message-comparison-consumer-transitory</name>
+	<description>Message Comparison Kafka Consumer Piattaforma Transitoria</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
