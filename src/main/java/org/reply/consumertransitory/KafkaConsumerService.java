@@ -14,15 +14,13 @@ import java.util.List;
 @EnableConfigurationProperties
 public class KafkaConsumerService {
 
-
     public static List<Message> messageList = new ArrayList<>();
 
-    @KafkaListener(topics = {"Event", "Diagnostics", "digic_event", "digic_diagnostics"}, groupId="json-consumer-transitory")
+    @KafkaListener(topics = {"Event", "Diagnostics", "digic_event", "digic_diagnostics"}, groupId="consumer-permanent")
     public void listen(ConsumerRecord<String, String> record){
         String topic = record.topic();
         String payload = record.value();
-        String piattaforma = "Transitoria";
-
+        String piattaforma = "Permanent";
         try {
             Message message = new Message(piattaforma, topic, payload);
             messageList.add(message);
@@ -31,7 +29,6 @@ public class KafkaConsumerService {
             e.printStackTrace();
         }
     }
-
     public List<Message> getMessageList() {
         return messageList;
     }
