@@ -8,7 +8,6 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
@@ -40,6 +39,8 @@ public class KafkaConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializer);
         //props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*"); // Allow deserialization of all packages
+        props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, 10 * 1024 * 1024);  // 10MB
+        props.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, 15 * 1024 * 1024);  // 15MB (un po' di margine)
         return props;
     }
 
@@ -56,4 +57,5 @@ public class KafkaConfig {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
+
 }
