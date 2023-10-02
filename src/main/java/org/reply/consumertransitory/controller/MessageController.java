@@ -68,7 +68,10 @@ public class MessageController {
 
     @GetMapping("/status")
     public ResponseEntity<String> getStatus() {
-        return ResponseEntity.ok("Transitory Consumer Status: OK");
+        String response = "Transitory Consumer Status: OK - ";
+        if(kafkaConsumerService.getStatus()) response += "Listening";
+        else response += "Stopped";
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/start")

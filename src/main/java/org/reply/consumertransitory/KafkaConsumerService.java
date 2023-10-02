@@ -47,4 +47,5 @@ public class KafkaConsumerService {
     public void stopListening() {
         isListening = false;
     }
+    public boolean getStatus(){ return isListening;}
 }
