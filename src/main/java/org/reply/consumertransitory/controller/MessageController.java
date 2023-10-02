@@ -66,4 +66,9 @@ public class MessageController {
             log.error(e.getMessage(), e);
         }
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<String> getStatus() throws InterruptedException {
+        return ResponseEntity.ok("Transitory Consumer Status: OK");
+    }
 }
