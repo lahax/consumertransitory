@@ -24,12 +24,15 @@ public class KafkaConsumerService {
             String topic = record.topic();
             String payload = record.value();
             String piattaforma = "Transitoria";
+            String key = record.key();
+            Long createTime= record.timestamp();
             String fixedPayload = payload.replace("${metric.value}", "\"${metric.value}\"");
 
             try {
-                Message message = new Message(piattaforma, topic, fixedPayload);
+                Message message = new Message(piattaforma, topic, fixedPayload, key, createTime);
                 messageList.add(message);
                 System.out.println(message.payload.toString());
+                System.out.println(record);
             } catch (Exception e) {
                 e.printStackTrace();
             }
