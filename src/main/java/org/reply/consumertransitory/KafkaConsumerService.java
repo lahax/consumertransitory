@@ -29,10 +29,11 @@ public class KafkaConsumerService {
             String fixedPayload = payload.replace("${metric.value}", "\"${metric.value}\"");
 
             try {
-                Message message = new Message(piattaforma, topic, fixedPayload, key, createTime);
-                messageList.add(message);
-                System.out.println(message.payload.toString());
-                System.out.println(record);
+                if(!key.contains("Prysmian")){
+                    Message message = new Message(piattaforma, topic, fixedPayload, key, createTime);
+                    messageList.add(message);
+                    System.out.println(message);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
