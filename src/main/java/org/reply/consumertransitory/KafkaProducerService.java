@@ -12,10 +12,10 @@ public class KafkaProducerService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     public void sendEvent(String message) {
-        kafkaTemplate.send("Event", message);
+        kafkaTemplate.send("event", message);
     }
     public void sendDiagnostics(String message) {
-        kafkaTemplate.send("Diagnostics", message);
+        kafkaTemplate.send("diagnostics", message);
     }
     public void sendDigicEvent(String message) {
         kafkaTemplate.send("digic_event", message);

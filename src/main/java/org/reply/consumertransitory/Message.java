@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class Message {
     String piattaforma;
     String topic;
-    String payload; //il payload arrrivato senza nessuna normalizzazione
-    String key;
-    Long createTime;
+    String payload;
 }
