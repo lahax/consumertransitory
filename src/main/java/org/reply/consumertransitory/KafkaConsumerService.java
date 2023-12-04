@@ -18,7 +18,7 @@ public class KafkaConsumerService {
     public static List<Message> messageList = new ArrayList<>();
     private boolean isListening = false;
 
-    @KafkaListener(topics = {"event", "diagnostics", "digic_event", "digic_diagnostics"}, groupId = "consumer-transitory")
+    @KafkaListener(topics = {"event", "diagnostics", "digic_event", "digic_diagnostics", "digic_unsolicited"}, groupId = "consumer-transitory")
     public void listen(ConsumerRecord<String, String> record){
         if(isListening){
             String topic = record.topic();
@@ -43,9 +43,11 @@ public class KafkaConsumerService {
         messageList.clear(); //svuotare lista dopo l'invio al Core
     }
     public void startListening() {
+        System.out.println("START CONSUMING");
         isListening = true;
     }
     public void stopListening() {
+        System.out.println("STOP CONSUMING");
         isListening = false;
     }
     public boolean getStatus(){ return isListening;}

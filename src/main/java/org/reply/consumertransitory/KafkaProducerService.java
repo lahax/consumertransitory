@@ -23,5 +23,8 @@ public class KafkaProducerService {
     public void sendDigicDiagnostics(String message) {
         kafkaTemplate.send("digic_diagnostics", message);
     }
+    public void sendUnsolicited(String message) {
+        kafkaTemplate.send("digic_unsolicited", message);
+    }
 }
 

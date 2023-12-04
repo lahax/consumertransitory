@@ -56,6 +56,11 @@ public class MessageController {
         kafkaProducerService.sendDigicDiagnostics(message);
         return ResponseEntity.ok("Message sent successfully on Digic Diagnostics topic");
     }
+    @PostMapping("/postOnUnsolicited")
+    public ResponseEntity<String> sendUnsolicited(@RequestBody String message) {
+        kafkaProducerService.sendUnsolicited(message);
+        return ResponseEntity.ok("Message sent successfully on Digic Unsolicited topic");
+    }
 
     @DeleteMapping("/deleteMessageList")
     public void deleteMessageList() throws InterruptedException {
