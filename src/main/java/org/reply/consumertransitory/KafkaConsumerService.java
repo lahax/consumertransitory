@@ -39,16 +39,18 @@ public class KafkaConsumerService {
         return messageList;
     }
 
-    public void clearMessageList() throws InterruptedException {
+    public void clearMessageList(){
         messageList.clear(); //svuotare lista dopo l'invio al Core
     }
     public void startListening() {
+        clearMessageList();
         System.out.println("START CONSUMING");
         isListening = true;
     }
     public void stopListening() {
         System.out.println("STOP CONSUMING");
         isListening = false;
+        clearMessageList();
     }
     public boolean getStatus(){ return isListening;}
 }
